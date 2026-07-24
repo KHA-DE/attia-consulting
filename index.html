@@ -53,12 +53,9 @@ a:hover{color:var(--ac-red-deep)}
 .btn-outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
 .btn-outline:hover{border-color:#fff}
 
-/* eyebrow / tags */
+/* eyebrow */
 .eyebrow{display:inline-block;font-family:var(--font-sans);font-size:var(--text-2xs);font-weight:700;letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--ac-ink);padding-bottom:6px;border-bottom:3px solid var(--ac-red)}
 .eyebrow.light{color:var(--text-ondark)}
-.tag{display:inline-flex;align-items:center;font-family:var(--font-sans);font-size:var(--text-3xs);font-weight:700;letter-spacing:var(--ls-label);text-transform:uppercase;padding:5px 10px;border-radius:var(--radius-sm)}
-.tag.neutral{background:var(--ac-paper-sink);color:var(--ac-ink-soft)}
-.tag.red{background:var(--ac-red-tint);color:var(--ac-red-deep)}
 
 /* header */
 header{position:sticky;top:0;z-index:50;background:var(--ac-paper);border-bottom:1px solid var(--ac-line);transition:box-shadow var(--dur-base) var(--md-ease)}
@@ -105,6 +102,7 @@ section{padding:92px 0}
 /* stats band */
 .band{background:var(--ac-graphite);color:#fff}
 .band-sec{padding:46px 0}
+.band .phead{margin-bottom:30px}
 .band .profcols{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(255,255,255,.16)}
 .band .pstats{padding-right:44px;border-right:1px solid rgba(255,255,255,.12);text-align:center;display:flex;flex-direction:column;justify-content:center}
 .band .plists{padding-left:44px;text-align:center;display:flex;flex-direction:column;justify-content:center}
@@ -126,7 +124,6 @@ section{padding:92px 0}
 .about .q em{color:var(--ac-red);font-style:italic}
 .about .role{margin-top:22px;font-size:14px;color:var(--ac-ink-muted)}
 .about .role b{color:var(--ac-ink);font-weight:700;display:block;font-size:16px}
-.about .tags{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
 
 /* wall / relationship network */
 .wall{background:var(--ac-graphite);color:#fff}
@@ -227,20 +224,22 @@ const T = {
       ['03','Netzwerk','Zugang zu den richtigen Leuten zur richtigen Zeit.','Über Industrien und Technologien hinweg, seit über drei Jahrzehnten gewachsen.'],
     ],
     more:'Mehr', less:'Weniger',
+    profilEy:'Profil',
     stats3:[['1989','Aktiv seit'],['Global','Netzwerk'],['C-Level','Sparring']],
     bandWaves:'Technologiewellen', waves:['Datenbanken','Internet','Internet der Dinge','Künstliche Intelligenz'],
     bandIndustries:'Kernbranchen', industries:['ERP','Marketing & Advertising','Health','Sustainability'],
     aboutEy:'Über Karim',
     aboutQ:['Seit über drei Jahrzehnten dasselbe Muster: die technische Wende ','früh',' erkennen, beim Aufbau neuer Ökosysteme mitgestalten und darauf basierende Märkte etablieren, von Datenbanken bis KI, quer durch Branchen.'],
-    aboutRole:['Karim H. Attia','Gründer & Geschäftsführer'],
-    tags:['Datenbanken','Internet','IoT','Kryptografie','KI'],
+    aboutRole:['Karim H. Attia','Digital Transformation Leader & Ecosystem Builder'],
     wallEy:'Stationen & Netzwerk', wallH:'Wo aus Technik Märkte wurden.',
     wallSub:'Ausgewählte Gründungen, Exits und Standardisierungsgremien, über vier Technologiewellen.',
     netHint:'Mit der Maus über einen Knoten fahren oder tippen, um die Verbindungen zu sehen.',
     cEy:'Kontakt', cH:'Sprechen wir.',
     cLabels:['Telefon','E-Mail','Anschrift','Name','Nachricht','Anfrage senden'],
     cPlace:['Ihr Name','name@firma.de','Worum geht es?'],
+    cAddr:'Gorch-Fock-Haus · Breite Straße 159 · 22767 Hamburg',
     done:['Gesendet','Vielen Dank','Wir melden uns kurzfristig unter'],
+    footer:['ATTIA Consulting · Gorch-Fock-Haus · Breite Straße 159 · 22767 Hamburg · USt-IdNr. DE247412700','Geschäftsführer: Karim H. Attia · © 2026'],
   },
   en:{
     navMain:[['Services','leistungen'],['Profile','profil'],['About Karim','ueber'],['Track record','netzwerk']], navContact:'Contact',
@@ -256,20 +255,22 @@ const T = {
       ['03','Network','Access to the right people at the right time.','Across industries and technologies, grown over three decades.'],
     ],
     more:'More', less:'Less',
+    profilEy:'Profile',
     stats3:[['1989','Active since'],['Global','Network'],['C-Level','Sparring']],
     bandWaves:'Technology waves', waves:['Databases','Internet','Internet of Things','Artificial Intelligence'],
     bandIndustries:'Core industries', industries:['ERP','Marketing & Advertising','Health','Sustainability'],
     aboutEy:'About Karim',
     aboutQ:['For over three decades, the same pattern: spotting the technical shift ','early',', helping build the ecosystems around it and establishing the markets on top, from databases to AI, across the most diverse industries.'],
-    aboutRole:['Karim H. Attia','Founder & Managing Director'],
-    tags:['Databases','Internet','IoT','Cryptography','AI'],
+    aboutRole:['Karim H. Attia','Digital Transformation Leader & Ecosystem Builder'],
     wallEy:'Track record & network', wallH:'Where technology became markets.',
     wallSub:'Selected ventures, exits and standards bodies, across four waves of technology.',
     netHint:'Hover or tap a node to trace its connections.',
     cEy:'Contact', cH:"Let's talk.",
     cLabels:['Phone','Email','Address','Name','Message','Send enquiry'],
     cPlace:['Your name','name@company.com','What is it about?'],
+    cAddr:'Gorch-Fock-Haus · Breite Straße 159 · 22767 Hamburg · Germany',
     done:['Sent','Thank you','We will get back to you shortly at'],
+    footer:['ATTIA Consulting · Gorch-Fock-Haus · Breite Straße 159 · 22767 Hamburg · Germany · VAT ID DE247412700','Managing Director: Karim H. Attia · © 2026'],
   },
 };
 const N = {
@@ -374,6 +375,7 @@ function view(lang){
   </div></section>
 
   <div class="band" id="profil"><section class="band-sec"><div class="wrap">
+    <div class="phead"><span class="eyebrow light">${t.profilEy}</span></div>
     <div class="profcols">
       <div class="pstats">${t.stats3.map(s=>`<div class="scell"><div class="stat-v">${s[0]}</div><div class="stat-l">${s[1]}</div></div>`).join('')}</div>
       <div class="plists">
@@ -389,7 +391,6 @@ function view(lang){
       <span class="eyebrow">${t.aboutEy}</span>
       <div class="q">${esc(t.aboutQ[0])}<em>${esc(t.aboutQ[1])}</em>${esc(t.aboutQ[2])}</div>
       <div class="role"><b>${t.aboutRole[0]}</b>${t.aboutRole[1]}</div>
-      <div class="tags">${t.tags.map((x,i)=>`<span class="tag ${i===0?'red':'neutral'}">${x}</span>`).join('')}</div>
     </div>
   </div></section>
 
@@ -405,7 +406,7 @@ function view(lang){
       <h2 class="ch">${t.cH}</h2>
       <div class="row"><div class="k">${t.cLabels[0]}</div><div class="v">+49 172 4235533</div></div>
       <div class="row"><div class="k">${t.cLabels[1]}</div><div class="v"><a href="mailto:karim@attia.consulting">karim@attia.consulting</a></div></div>
-      <div class="row"><div class="k">${t.cLabels[2]}</div><div class="v">Gorch-Fock-Haus · Breite Straße 159 · 22767 Hamburg</div></div>
+      <div class="row"><div class="k">${t.cLabels[2]}</div><div class="v">${t.cAddr}</div></div>
     </div>
     <form class="cform" novalidate>
       <div class="field"><label>${t.cLabels[3]}</label><input name="name" placeholder="${t.cPlace[0]}"></div>
@@ -417,7 +418,7 @@ function view(lang){
 
   <footer class="site"><div class="wrap row">
     ${wordmark('footer-word')}
-    <div class="legal">ATTIA Consulting · Gorch-Fock-Haus · Breite Straße 159 · 22767 Hamburg · USt-IdNr. DE247412700<br>Geschäftsführer: Karim H. Attia · © 2026</div>
+    <div class="legal">${t.footer[0]}<br>${t.footer[1]}</div>
   </div></footer>
 
   <button class="fab" data-show="false" data-scroll="kontakt" aria-label="Kontakt">
