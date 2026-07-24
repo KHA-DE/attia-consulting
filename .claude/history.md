@@ -31,6 +31,8 @@ dependency-freie index.html als Arbeitsquelle.
   ergaenzt. Menue erweitert um Profil (das 1989-Band) + Stationen als Anker;
   Nav-Links schliessen das Handy-Menue. Desktop + 390px verifiziert: 0 Ueberlauf.
   Assets nach assets/ kopiert. Basis + Menue live gepusht.
+- Nachtrag: Client/Server aus den Wellen wieder entfernt (ist die Architektur der
+  Datenbanken-Aera, keine eigene Marktwelle; Erzaehlung bleibt bei vier Wellen).
 
 ### Offen
 - Wall-Stationen mit monochromen Logos statt Wortmarken: Sourcing offen. Viele der
