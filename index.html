@@ -127,18 +127,33 @@ section{padding:92px 0}
 .about .role b{color:var(--ac-ink);font-weight:700;display:block;font-size:16px}
 .about .tags{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
 
-/* wall */
+/* wall / relationship network */
 .wall{background:var(--ac-graphite);color:#fff}
-.wall .grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.13);border-left:1px solid rgba(255,255,255,.13)}
-.wall .cell{border-right:1px solid rgba(255,255,255,.13);border-bottom:1px solid rgba(255,255,255,.13);padding:30px 24px;min-height:118px;display:flex;flex-direction:column;justify-content:center;gap:9px;transition:background var(--dur-base) var(--md-ease)}
-.wall .cell:hover{background:rgba(255,255,255,.045)}
-.wall .cell .nm{font-family:var(--font-sans);font-weight:700;font-size:21px;letter-spacing:-.015em;color:rgba(255,255,255,.6);transition:color var(--dur-base) var(--md-ease);display:flex;align-items:center;gap:9px}
-.wall .cell .nm::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ac-red);transform:scale(0);transition:transform var(--dur-base) var(--md-ease);flex:none}
-.wall .cell:hover .nm{color:#fff}
-.wall .cell:hover .nm::before{transform:scale(1)}
-.wall .cell .nt{font-family:var(--font-sans);font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.4)}
 .wall .shead h2{color:#fff}
 .wall .shead p{color:var(--text-ondark)}
+.nethint{font-size:12px;color:rgba(255,255,255,.45);letter-spacing:.03em;margin:-30px 0 30px}
+.netwrap{width:100%}
+.netsvg{width:100%;height:auto;display:block;overflow:visible}
+.wclabel{fill:rgba(255,255,255,.28);font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.wedge{stroke:rgba(255,255,255,.15);stroke-width:1.4;transition:stroke .2s,stroke-width .2s}
+.wnode{cursor:pointer}
+.wnode .wbg{fill:var(--ac-graphite);stroke:rgba(255,255,255,.14);stroke-width:1;transition:stroke .2s,fill .2s}
+.wnode image{opacity:.74;transition:opacity .2s}
+.wnode:hover .wbg,.wnode:focus-visible .wbg,.wnode.active .wbg{stroke:var(--ac-red);fill:#242427}
+.wnode:hover image,.wnode:focus-visible image,.wnode.active image{opacity:1}
+.wnode.founder .wbg{stroke:rgba(188,7,16,.5)}
+.wcore .wbg{fill:var(--ac-graphite);stroke:rgba(188,7,16,.55);stroke-width:2}
+.wcore image{opacity:1}
+.wcore:hover .wbg,.wcore.active .wbg{fill:var(--ac-graphite);stroke:var(--ac-red)}
+.wtext-t{fill:#fff;font-family:var(--font-display);font-weight:900;font-size:14px;letter-spacing:.02em}
+.wlabel{opacity:0;transition:opacity .2s;pointer-events:none}
+.wnode:hover .wlabel,.wnode:focus-visible .wlabel,.wnode.active .wlabel{opacity:1}
+.wl-n{fill:#fff;font-family:var(--font-sans);font-weight:700;font-size:13px}
+.wl-d{fill:var(--text-ondark);font-family:var(--font-sans);font-size:11px}
+.netsvg.has-active .wnode:not(.active):not(.neighbor){opacity:.24}
+.netsvg.has-active .wclabel{opacity:.12}
+.netsvg.has-active .wedge:not(.lit){stroke:rgba(255,255,255,.05)}
+.wedge.lit{stroke:var(--ac-red);stroke-width:2}
 
 /* contact */
 .contact{background:var(--ac-paper-warm);border-top:1px solid var(--ac-line)}
@@ -166,7 +181,7 @@ footer.site .legal{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
 .fab:hover{background:var(--ac-red-deep)}
 
 @media(max-width:900px){
-  .svc,.wall .grid,.band .stats3{grid-template-columns:1fr 1fr}
+  .svc,.band .stats3{grid-template-columns:1fr 1fr}
   .band .scell{border-right:none;padding-right:0}
   .band .lists2{grid-template-columns:1fr}
   .band .bcol{border-right:none;border-bottom:1px solid rgba(255,255,255,.12);padding:22px 0}
@@ -183,7 +198,7 @@ footer.site .legal{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
   .nav .links a{padding:15px 0;font-size:16px;border-bottom:1px solid var(--ac-line)}
   .nav .links .lang{align-self:flex-start;margin-top:16px}
   .nav .links>.btn{margin-top:16px;align-self:flex-start}
-  .svc,.wall .grid{grid-template-columns:1fr}
+  .svc{grid-template-columns:1fr}
   .hero .cta{flex-direction:column;align-items:stretch}
 }
 </style>
@@ -215,6 +230,7 @@ const T = {
     tags:['Datenbanken','Internet','IoT','Kryptografie','KI'],
     wallEy:'Stationen & Netzwerk', wallH:'Wo aus Technik Märkte wurden.',
     wallSub:'Ausgewählte Gründungen, Exits und Standardisierungsgremien, über vier Technologiewellen.',
+    netHint:'Mit der Maus über einen Knoten fahren oder tippen, um die Verbindungen zu sehen.',
     cEy:'Kontakt', cH:'Sprechen wir.',
     cLabels:['Telefon','E-Mail','Anschrift','Name','Nachricht','Anfrage senden'],
     cPlace:['Ihr Name','name@firma.de','Worum geht es?'],
@@ -243,31 +259,70 @@ const T = {
     tags:['Databases','Internet','IoT','Cryptography','AI'],
     wallEy:'Track record & network', wallH:'Where technology became markets.',
     wallSub:'Selected ventures, exits and standards bodies, across four waves of technology.',
+    netHint:'Hover or tap a node to trace its connections.',
     cEy:'Contact', cH:"Let's talk.",
     cLabels:['Phone','Email','Address','Name','Message','Send enquiry'],
     cPlace:['Your name','name@company.com','What is it about?'],
     done:['Sent','Thank you','We will get back to you shortly at'],
   },
 };
-const WALL = [
-  {n:'Xenion', de:'Aufbau · Exit an Isobar', en:'Built · exit to Isobar'},
-  {n:'Isobar', de:'Käufer von Xenion', en:'Acquired Xenion'},
-  {n:'Dentsu Aegis Network', de:'Baute darauf auf', en:'Built on it'},
-  {n:'nugg.ad', de:'Exit an Deutsche Post DHL', en:'Exit to Deutsche Post DHL'},
-  {n:'Deutsche Post DHL', de:'Käufer von nugg.ad', en:'Acquired nugg.ad'},
-  {n:'UBIRCH', de:'EU Digital COVID Certificate', en:'EU Digital COVID Certificate'},
-  {n:'IBM', de:'Impfzertifikat-Partner', en:'Vaccination-cert partner'},
-  {n:'BMG / RKI', de:'Bund · Pandemie', en:'Federal · pandemic'},
-  {n:'GOVERNIFY', de:'Trust-Infrastruktur', en:'Trust infrastructure'},
-  {n:'Coalition-X', de:'Gaia-X Ökosystem', en:'Gaia-X ecosystem'},
-  {n:'Open Prometheus', de:'Medizinische Evidenz', en:'Medical evidence'},
-  {n:'IAB Europe', de:'Vorsitz Brand Advertising', en:'Chaired Brand Advertising'},
-  {n:'IAB US', de:'Standards · USA', en:'Standards · US'},
-  {n:'BVDW', de:'Digitalverband', en:'Digital industry body'},
-  {n:'AGOF', de:'Reichweitenstandard', en:'Reach standardisation'},
-  {n:'agma', de:'Media-Analyse', en:'Media measurement'},
-  {n:'ZIA e.V.', de:'Verband', en:'Association'},
+const N = {
+  isobar:{n:'Isobar',x:150,y:72,de:'Käufer von Xenion',en:'Acquired Xenion'},
+  dentsu:{n:'Dentsu Aegis',x:315,y:64,de:'Baute darauf auf',en:'Built on it'},
+  xenion:{n:'Xenion',x:180,y:180,founder:1,de:'Aufbau · Exit an Isobar',en:'Built · exit to Isobar'},
+  nuggad:{n:'nugg.ad',x:150,y:315,founder:1,de:'Exit an Deutsche Post DHL',en:'Exit to Deutsche Post DHL'},
+  dhl:{n:'Deutsche Post DHL',x:150,y:430,de:'Käufer von nugg.ad',en:'Acquired nugg.ad'},
+  foma:{n:'FOMA',x:430,y:150,text:1,founder:1,de:'Mitgründer · im BVDW',en:'Co-founder · within BVDW'},
+  mediaagenturen:{n:'Die Mediaagenturen',x:600,y:95,de:'Nachfolger FOMA + OMG',en:'Successor of FOMA + OMG'},
+  bvdw:{n:'BVDW',x:625,y:245,de:'Digitalverband',en:'Digital industry body'},
+  ivw:{n:'IVW',x:815,y:135,de:'Auflagenkontrolle',en:'Circulation audit'},
+  iabeurope:{n:'IAB Europe',x:855,y:290,founder:1,de:'Vorsitz Brand Advertising',en:'Chaired Brand Advertising'},
+  iabus:{n:'IAB US',x:915,y:405,de:'Standards · USA',en:'Standards · US'},
+  agof:{n:'AGOF',x:740,y:410,de:'Reichweitenstandard',en:'Reach standardisation'},
+  agma:{n:'agma',x:700,y:530,de:'Media-Analyse',en:'Media measurement'},
+  ubirch:{n:'UBIRCH',x:900,y:560,founder:1,de:'EU Digital COVID Certificate',en:'EU Digital COVID Certificate'},
+  ibm:{n:'IBM',x:955,y:685,de:'Impfzertifikat-Partner',en:'Vaccination-cert partner'},
+  bmg:{n:'BMG',x:790,y:690,de:'Bund · Pandemie',en:'Federal · pandemic'},
+  openprometheus:{n:'Open Prometheus',x:395,y:470,founder:1,de:'Medizinische Evidenz',en:'Medical evidence'},
+  governify:{n:'Governify',x:420,y:610,founder:1,de:'Trust-Infrastruktur',en:'Trust infrastructure'},
+  coalitionx:{n:'Coalition-X',x:575,y:660,de:'Gaia-X Ökosystem',en:'Gaia-X ecosystem'},
+  zia:{n:'ZIA',x:600,y:530,de:'Verband Immobilienwirtschaft',en:'Real estate association'},
+  attia:{n:'ATTIA',x:490,y:355,core:1,de:'Der verbindende Knoten',en:'The connecting node'},
+};
+const EDGES = [
+  ['attia','xenion'],['attia','nuggad'],['attia','ubirch'],['attia','governify'],['attia','openprometheus'],
+  ['xenion','isobar'],['isobar','dentsu'],
+  ['xenion','foma'],['foma','mediaagenturen'],
+  ['xenion','bvdw'],
+  ['nuggad','dhl'],
+  ['nuggad','iabeurope'],['iabeurope','iabus'],
+  ['bvdw','iabeurope'],['bvdw','mediaagenturen'],
+  ['bvdw','agof'],['agof','agma'],['bvdw','ivw'],
+  ['ubirch','ibm'],['ibm','bmg'],
+  ['governify','coalitionx'],['governify','zia'],['zia','coalitionx'],
 ];
+const CLUSTERS = [
+  {t:'AdTech-Ära',x:130,y:26},
+  {t:'Standards & Verbände',x:560,y:26},
+  {t:'Pandemie & Trust',x:835,y:495},
+  {t:'Aktuelle Ventures',x:205,y:588},
+];
+function netSVG(lang){
+  const clabels = CLUSTERS.map(c=>`<text class="wclabel" x="${c.x}" y="${c.y}">${c.t}</text>`).join('');
+  const edges = EDGES.map(([a,b])=>{const A=N[a],B=N[b];return `<line class="wedge" data-a="${a}" data-b="${b}" x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}"/>`;}).join('');
+  const nodes = Object.keys(N).map(id=>{
+    const o=N[id];
+    if(o.core) return `<g class="wnode wcore" data-id="${id}" tabindex="0" transform="translate(${o.x},${o.y})"><circle class="wbg" r="60"/><image href="assets/logos/attia.png" x="-54" y="-42" width="108" height="84" preserveAspectRatio="xMidYMid meet"/><g class="wlabel"><text class="wl-n" text-anchor="middle" y="82">ATTIA Consulting</text><text class="wl-d" text-anchor="middle" y="98">${o[lang]}</text></g></g>`;
+    if(o.text) return `<g class="wnode wtext ${o.founder?'founder':''}" data-id="${id}" tabindex="0" transform="translate(${o.x},${o.y})"><rect class="wbg" x="-46" y="-19" width="92" height="38" rx="8"/><text class="wtext-t" text-anchor="middle" dy="5">${o.n}</text><g class="wlabel"><text class="wl-n" text-anchor="middle" y="38">${o.n}</text><text class="wl-d" text-anchor="middle" y="54">${o[lang]}</text></g></g>`;
+    const bw=88,bh=50;
+    return `<g class="wnode ${o.founder?'founder':''}" data-id="${id}" tabindex="0" transform="translate(${o.x},${o.y})">
+      <rect class="wbg" x="${-bw/2}" y="${-bh/2}" width="${bw}" height="${bh}" rx="8"/>
+      <image href="assets/logos/${id}.png" x="${-bw/2+9}" y="${-bh/2+8}" width="${bw-18}" height="${bh-16}" preserveAspectRatio="xMidYMid meet"/>
+      <g class="wlabel"><text class="wl-n" text-anchor="middle" y="${bh/2+18}">${o.n}</text><text class="wl-d" text-anchor="middle" y="${bh/2+34}">${o[lang]}</text></g>
+    </g>`;
+  }).join('');
+  return `<svg class="netsvg" viewBox="0 0 1000 740" role="img" aria-label="Beziehungsnetz ATTIA Consulting"><g class="wclabels">${clabels}</g><g class="wedges">${edges}</g><g class="wnodes">${nodes}</g></svg>`;
+}
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const wordmark = cls => `<span class="logo-word ${cls||''}"><span class="lw1">ATTIA</span><span class="lw2">Consulting</span></span>`;
 
@@ -325,7 +380,8 @@ function view(lang){
 
   <div class="wall"><section id="netzwerk"><div class="wrap">
     <div class="shead"><span class="eyebrow light">${t.wallEy}</span><h2>${t.wallH}</h2><p>${t.wallSub}</p></div>
-    <div class="grid">${WALL.map(w=>`<div class="cell"><div class="nm">${w.n}</div><div class="nt">${w[lang]}</div></div>`).join('')}</div>
+    <div class="nethint">${t.netHint}</div>
+    <div class="netwrap">${netSVG(lang)}</div>
   </div></section></div>
 
   <div class="contact" id="kontakt"><section><div class="wrap cgrid">
@@ -391,6 +447,25 @@ function mount(){
     const first=name.split(' ')[0]||'';
     form.outerHTML = `<div class="done"><span class="eyebrow">${t.done[0]}</span><h3>${t.done[1]}, ${esc(first)}.</h3><p>${t.done[2]} ${esc(email)}.</p></div>`;
   });
+
+  const svg=root.querySelector('.netsvg');
+  if(svg){
+    const nnodes=[...svg.querySelectorAll('.wnode')], nedges=[...svg.querySelectorAll('.wedge')];
+    const activate=id=>{
+      svg.classList.add('has-active');
+      const nb=new Set([id]);
+      nedges.forEach(e=>{const lit=(e.dataset.a===id||e.dataset.b===id); e.classList.toggle('lit',lit); if(lit){nb.add(e.dataset.a);nb.add(e.dataset.b);}});
+      nnodes.forEach(n=>{n.classList.toggle('active',n.dataset.id===id); n.classList.toggle('neighbor',nb.has(n.dataset.id)&&n.dataset.id!==id);});
+    };
+    const clr=()=>{svg.classList.remove('has-active'); nedges.forEach(e=>e.classList.remove('lit')); nnodes.forEach(n=>n.classList.remove('active','neighbor'));};
+    nnodes.forEach(n=>{const id=n.dataset.id;
+      n.addEventListener('pointerenter',()=>activate(id));
+      n.addEventListener('focus',()=>activate(id));
+      n.addEventListener('click',e=>{e.stopPropagation();activate(id);});
+    });
+    svg.addEventListener('pointerleave',clr);
+    root.addEventListener('click',clr);
+  }
 }
 
 window.addEventListener('scroll', ()=>{
