@@ -104,18 +104,19 @@ section{padding:92px 0}
 
 /* stats band */
 .band{background:var(--ac-graphite);color:#fff}
-.band-sec{padding:70px 0}
-.band .stats3{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.16)}
-.band .scell{padding:30px 30px 34px 0;border-right:1px solid rgba(255,255,255,.12)}
-.band .scell:last-child{border-right:none}
-.stat-v{font-family:var(--font-display);font-weight:900;line-height:1;font-size:var(--text-3xl);letter-spacing:-.02em;color:#fff}
+.band-sec{padding:46px 0}
+.band .profcols{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(255,255,255,.16)}
+.band .pstats{padding-right:44px;border-right:1px solid rgba(255,255,255,.12);text-align:center;display:flex;flex-direction:column;justify-content:center}
+.band .plists{padding-left:44px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+.band .scell{padding:32px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.band .scell:last-child{border-bottom:none}
+.stat-v{font-family:var(--font-display);font-weight:900;line-height:1;font-size:3.5rem;letter-spacing:-.02em;color:#fff}
 .stat-l{font-family:var(--font-sans);font-weight:600;margin-top:10px;font-size:var(--text-2xs);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--text-ondark);border-top:3px solid var(--ac-red);padding-top:8px;display:inline-block}
-.band .lists2{display:grid;grid-template-columns:1fr 1fr;margin-top:34px;border-top:1px solid rgba(255,255,255,.14)}
-.band .bcol{padding:24px 30px 6px 0;border-right:1px solid rgba(255,255,255,.12)}
-.band .bcol:last-child{border-right:none}
-.band .bh{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-ondark);border-top:3px solid var(--ac-red);padding-top:10px;display:inline-block}
-.band .bcol ul{list-style:none;margin:16px 0 0;padding:0}
-.band .bcol li{font-family:var(--font-sans);font-weight:600;font-size:19px;letter-spacing:-.01em;color:#fff;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.band .bcol{padding:22px 0 8px}
+.band .bcol:first-child{border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:22px}
+.band .bh{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-ondark);border-top:3px solid var(--ac-red);padding-top:10px;margin-top:14px;display:inline-block}
+.band .bcol ul{list-style:none;margin:0;padding:0}
+.band .bcol li{font-family:var(--font-sans);font-weight:600;font-size:22px;letter-spacing:-.01em;color:#fff;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.1)}
 .band .bcol li:last-child{border-bottom:none}
 
 /* about */
@@ -187,11 +188,10 @@ footer.site .legal{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
 .fab:hover{background:var(--ac-red-deep)}
 
 @media(max-width:900px){
-  .svc,.band .stats3{grid-template-columns:1fr 1fr}
-  .band .scell{border-right:none;padding-right:0}
-  .band .lists2{grid-template-columns:1fr}
-  .band .bcol{border-right:none;border-bottom:1px solid rgba(255,255,255,.12);padding:22px 0}
-  .band .bcol:last-child{border-bottom:none}
+  .svc{grid-template-columns:1fr 1fr}
+  .band .profcols{grid-template-columns:1fr}
+  .band .pstats{border-right:none;padding-right:0;border-bottom:1px solid rgba(255,255,255,.12)}
+  .band .plists{padding-left:0}
   .about,.cgrid{grid-template-columns:1fr}
   .hero h1{font-size:50px}
   .fab{right:20px;bottom:20px}
@@ -374,10 +374,12 @@ function view(lang){
   </div></section>
 
   <div class="band" id="profil"><section class="band-sec"><div class="wrap">
-    <div class="stats3">${t.stats3.map(s=>`<div class="scell"><div class="stat-v">${s[0]}</div><div class="stat-l">${s[1]}</div></div>`).join('')}</div>
-    <div class="lists2">
-      <div class="bcol"><div class="bh">${t.bandWaves}</div><ul>${t.waves.map(w=>`<li>${w}</li>`).join('')}</ul></div>
-      <div class="bcol"><div class="bh">${t.bandIndustries}</div><ul>${t.industries.map(w=>`<li>${w}</li>`).join('')}</ul></div>
+    <div class="profcols">
+      <div class="pstats">${t.stats3.map(s=>`<div class="scell"><div class="stat-v">${s[0]}</div><div class="stat-l">${s[1]}</div></div>`).join('')}</div>
+      <div class="plists">
+        <div class="bcol"><ul>${t.waves.map(w=>`<li>${w}</li>`).join('')}</ul><div class="bh">${t.bandWaves}</div></div>
+        <div class="bcol"><ul>${t.industries.map(w=>`<li>${w}</li>`).join('')}</ul><div class="bh">${t.bandIndustries}</div></div>
+      </div>
     </div>
   </div></section></div>
 
