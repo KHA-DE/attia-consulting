@@ -154,6 +154,12 @@ section{padding:92px 0}
 .netsvg.has-active .wclabel{opacity:.12}
 .netsvg.has-active .wedge:not(.lit){stroke:rgba(255,255,255,.05)}
 .wedge.lit{stroke:var(--ac-red);stroke-width:2}
+@keyframes waberA{0%,100%{transform:translate(0,0)}25%{transform:translate(5px,-3px)}50%{transform:translate(2px,4px)}75%{transform:translate(-4px,2px)}}
+@keyframes waberB{0%,100%{transform:translate(0,0)}25%{transform:translate(-4px,-4px)}50%{transform:translate(3px,3px)}75%{transform:translate(4px,-2px)}}
+@keyframes waberC{0%,100%{transform:translate(0,0)}25%{transform:translate(3px,4px)}50%{transform:translate(-5px,1px)}75%{transform:translate(1px,-4px)}}
+@keyframes waberD{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,3px)}50%{transform:translate(4px,-4px)}75%{transform:translate(-2px,-3px)}}
+.netsvg.has-active .wnode.active{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){.wnode{animation:none!important}}
 
 /* contact */
 .contact{background:var(--ac-paper-warm);border-top:1px solid var(--ac-line)}
@@ -310,16 +316,23 @@ const CLUSTERS = [
 function netSVG(lang){
   const clabels = CLUSTERS.map(c=>`<text class="wclabel" x="${c.x}" y="${c.y}">${c.t}</text>`).join('');
   const edges = EDGES.map(([a,b])=>{const A=N[a],B=N[b];return `<line class="wedge" data-a="${a}" data-b="${b}" x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}"/>`;}).join('');
-  const nodes = Object.keys(N).map(id=>{
+  const nodes = Object.keys(N).map((id,i)=>{
     const o=N[id];
-    if(o.core) return `<g class="wnode wcore" data-id="${id}" tabindex="0" transform="translate(${o.x},${o.y})"><circle class="wbg" r="60"/><image href="assets/logos/attia.png" x="-54" y="-42" width="108" height="84" preserveAspectRatio="xMidYMid meet"/><g class="wlabel"><text class="wl-n" text-anchor="middle" y="82">ATTIA Consulting</text><text class="wl-d" text-anchor="middle" y="98">${o[lang]}</text></g></g>`;
-    if(o.text) return `<g class="wnode wtext ${o.founder?'founder':''}" data-id="${id}" tabindex="0" transform="translate(${o.x},${o.y})"><rect class="wbg" x="-46" y="-19" width="92" height="38" rx="8"/><text class="wtext-t" text-anchor="middle" dy="5">${o.n}</text><g class="wlabel"><text class="wl-n" text-anchor="middle" y="38">${o.n}</text><text class="wl-d" text-anchor="middle" y="54">${o[lang]}</text></g></g>`;
-    const bw=88,bh=50;
-    return `<g class="wnode ${o.founder?'founder':''}" data-id="${id}" tabindex="0" transform="translate(${o.x},${o.y})">
-      <rect class="wbg" x="${-bw/2}" y="${-bh/2}" width="${bw}" height="${bh}" rx="8"/>
-      <image href="assets/logos/${id}.png" x="${-bw/2+9}" y="${-bh/2+8}" width="${bw-18}" height="${bh-16}" preserveAspectRatio="xMidYMid meet"/>
-      <g class="wlabel"><text class="wl-n" text-anchor="middle" y="${bh/2+18}">${o.n}</text><text class="wl-d" text-anchor="middle" y="${bh/2+34}">${o[lang]}</text></g>
-    </g>`;
+    const anim=`animation:waber${'ABCD'[i%4]} ${6+(i%5)}s ease-in-out infinite;animation-delay:-${((i*1.7)%6).toFixed(1)}s`;
+    let inner;
+    if(o.core){
+      inner=`<g class="wnode wcore" data-id="${id}" tabindex="0" style="${anim}"><circle class="wbg" r="60"/><image href="assets/logos/attia.png" x="-54" y="-42" width="108" height="84" preserveAspectRatio="xMidYMid meet"/><g class="wlabel"><text class="wl-n" text-anchor="middle" y="82">ATTIA Consulting</text><text class="wl-d" text-anchor="middle" y="98">${o[lang]}</text></g></g>`;
+    } else if(o.text){
+      inner=`<g class="wnode wtext ${o.founder?'founder':''}" data-id="${id}" tabindex="0" style="${anim}"><rect class="wbg" x="-46" y="-19" width="92" height="38" rx="8"/><text class="wtext-t" text-anchor="middle" dy="5">${o.n}</text><g class="wlabel"><text class="wl-n" text-anchor="middle" y="38">${o.n}</text><text class="wl-d" text-anchor="middle" y="54">${o[lang]}</text></g></g>`;
+    } else {
+      const bw=88,bh=50;
+      inner=`<g class="wnode ${o.founder?'founder':''}" data-id="${id}" tabindex="0" style="${anim}">
+        <rect class="wbg" x="${-bw/2}" y="${-bh/2}" width="${bw}" height="${bh}" rx="8"/>
+        <image href="assets/logos/${id}.png" x="${-bw/2+9}" y="${-bh/2+8}" width="${bw-18}" height="${bh-16}" preserveAspectRatio="xMidYMid meet"/>
+        <g class="wlabel"><text class="wl-n" text-anchor="middle" y="${bh/2+18}">${o.n}</text><text class="wl-d" text-anchor="middle" y="${bh/2+34}">${o[lang]}</text></g>
+      </g>`;
+    }
+    return `<g class="wnode-pos" transform="translate(${o.x},${o.y})">${inner}</g>`;
   }).join('');
   return `<svg class="netsvg" viewBox="0 0 1000 740" role="img" aria-label="Beziehungsnetz ATTIA Consulting"><g class="wclabels">${clabels}</g><g class="wedges">${edges}</g><g class="wnodes">${nodes}</g></svg>`;
 }
