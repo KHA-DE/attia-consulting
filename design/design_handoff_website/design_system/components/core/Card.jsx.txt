@@ -1,0 +1,18 @@
+import React from 'react';
+
+/** Content card — hairline border, quiet elevation, optional red top accent. */
+export function Card({ accent = false, interactive = false, children, style, ...rest }) {
+  return (
+    <div style={{
+      background: 'var(--ac-paper)', border: '1px solid var(--ac-line)',
+      borderTop: accent ? '3px solid var(--ac-red)' : '1px solid var(--ac-line)',
+      borderRadius: 'var(--radius-md)', padding: 'var(--space-6)',
+      boxShadow: 'var(--shadow-card)',
+      transition: 'box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out)',
+      cursor: interactive ? 'pointer' : 'default', ...style,
+    }}
+      onMouseEnter={interactive ? (e => { e.currentTarget.style.boxShadow = 'var(--shadow-lg)'; e.currentTarget.style.transform = 'translateY(-2px)'; }) : undefined}
+      onMouseLeave={interactive ? (e => { e.currentTarget.style.boxShadow = 'var(--shadow-card)'; e.currentTarget.style.transform = 'none'; }) : undefined}
+      {...rest}>{children}</div>
+  );
+}

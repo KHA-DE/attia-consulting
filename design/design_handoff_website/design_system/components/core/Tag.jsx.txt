@@ -1,0 +1,21 @@
+import React from 'react';
+
+/** Small uppercase tag / badge. `tone` sets the color treatment. */
+export function Tag({ tone = 'neutral', children, style, ...rest }) {
+  const tones = {
+    neutral: { background: 'var(--ac-paper-sink)', color: 'var(--ac-ink-soft)' },
+    red: { background: 'var(--ac-red-tint)', color: 'var(--ac-red-deep)' },
+    solid: { background: 'var(--ac-red)', color: '#fff' },
+    dark: { background: 'var(--ac-ink)', color: '#fff' },
+    outline: { background: 'transparent', color: 'var(--ac-ink-soft)', boxShadow: 'inset 0 0 0 1px var(--ac-line-strong)' },
+  };
+  return (
+    <span style={{
+      display: 'inline-flex', alignItems: 'center',
+      fontFamily: 'var(--font-sans)', fontSize: 'var(--text-3xs)', fontWeight: 700,
+      letterSpacing: 'var(--ls-label)', textTransform: 'uppercase',
+      padding: '5px 10px', borderRadius: 'var(--radius-sm)',
+      ...tones[tone], ...style,
+    }} {...rest}>{children}</span>
+  );
+}

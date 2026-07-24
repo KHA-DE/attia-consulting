@@ -1,0 +1,375 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../styles.css">
+<title>ATTIA Consulting</title>
+<script src="../../_ds_bundle.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-sans);color:var(--ac-ink);background:var(--ac-paper)}
+a{color:var(--ac-red);text-decoration:none}
+a:hover{color:var(--ac-red-deep)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 40px}
+/* header */
+header{position:sticky;top:0;z-index:50;background:var(--ac-paper);border-bottom:1px solid var(--ac-line);transition:box-shadow var(--dur-base) var(--md-ease)}
+header[data-elevated="true"]{box-shadow:var(--md-e2)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:76px}
+.nav .links{display:flex;gap:30px;align-items:center}
+.nav .links a{color:var(--ac-ink);font-size:14px;font-weight:600;letter-spacing:.01em}
+.nav .links a:hover{color:var(--ac-red)}
+.lang{display:flex;border:1px solid var(--ac-line-strong);border-radius:999px;overflow:hidden;font-size:12px;font-weight:700}
+.lang button{border:none;background:none;padding:5px 11px;cursor:pointer;color:var(--ac-ink-muted);font-weight:700;font-family:var(--font-sans)}
+.lang button[data-on="true"]{background:var(--ac-ink);color:#fff}
+.burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;padding:11px;border:none;background:none;cursor:pointer}
+.burger span{display:block;height:2px;width:100%;background:var(--ac-ink);border-radius:2px;transition:transform var(--dur-base) var(--md-ease),opacity var(--dur-fast)}
+.burger[data-open="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger[data-open="true"] span:nth-child(2){opacity:0}
+.burger[data-open="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+/* hero */
+.hero{background:var(--ac-graphite);color:#fff;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-120px;top:-40px;width:620px;height:620px;background:url('../../assets/attia-logo.png') center/contain no-repeat;filter:invert(1) grayscale(1);mix-blend-mode:screen;opacity:.15}
+.hero .wrap{padding-top:104px;padding-bottom:112px;position:relative;z-index:1}
+.hero h1{font-family:var(--font-display);font-weight:900;font-size:74px;line-height:1;letter-spacing:-.03em;margin:24px 0 0;max-width:920px}
+.hero h1 em{color:var(--ac-red);font-style:normal}
+.hero .sub{font-family:var(--font-serif);font-size:21px;line-height:1.5;color:var(--text-ondark);margin-top:24px;max-width:600px}
+.hero .cta{display:flex;gap:14px;margin-top:36px}
+/* sections */
+section{padding:92px 0}
+.shead{display:flex;flex-direction:column;gap:16px;margin-bottom:44px;max-width:720px}
+.shead h2{font-family:var(--font-display);font-weight:900;font-size:42px;line-height:1.04;letter-spacing:-.02em;margin:0}
+.shead p{font-family:var(--font-serif);font-size:18px;line-height:1.6;color:var(--ac-ink-soft);margin:0}
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.svc .n{font-family:var(--font-display);font-weight:900;font-size:22px;color:var(--ac-red)}
+.svc h3{font-size:21px;font-weight:700;letter-spacing:-.01em;margin:14px 0 10px}
+.svc p{font-family:var(--font-serif);font-size:15px;line-height:1.6;color:var(--ac-ink-soft);margin:0}
+.svc .more{overflow:hidden;transition:max-height var(--dur-slow) var(--md-ease),opacity var(--dur-base);font-size:14px;line-height:1.6;color:var(--ac-ink-muted);border-top:1px solid var(--ac-line);margin-top:16px}
+.svc .hint{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ac-red);margin-top:16px;cursor:pointer}
+/* stats band */
+.band{background:var(--ac-graphite);color:#fff}
+.band .grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.16)}
+.band .cell{padding:34px 0;border-right:1px solid rgba(255,255,255,.12);display:flex;justify-content:center}
+.band .cell:last-child{border-right:none}
+.band .stats3{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.16)}
+.band .scell{padding:30px 30px 34px 0;border-right:1px solid rgba(255,255,255,.12)}
+.band .scell:last-child{border-right:none}
+.band .lists2{display:grid;grid-template-columns:1fr 1fr;margin-top:34px;border-top:1px solid rgba(255,255,255,.14)}
+.band .bcol{padding:24px 30px 6px 0;border-right:1px solid rgba(255,255,255,.12)}
+.band .bcol:last-child{border-right:none}
+.band .bh{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-ondark);border-top:3px solid var(--ac-red);padding-top:10px;display:inline-block}
+.band .bcol ul{list-style:none;margin:16px 0 0;padding:0}
+.band .bcol li{font-family:var(--font-sans);font-weight:600;font-size:19px;letter-spacing:-.01em;color:#fff;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.band .bcol li:last-child{border-bottom:none}
+/* about */
+.about{display:grid;grid-template-columns:340px 1fr;gap:56px;align-items:center}
+.about img{width:100%;border-radius:6px;filter:grayscale(.15)}
+.about .q{font-family:var(--font-serif);font-size:26px;line-height:1.42;font-weight:500;letter-spacing:-.01em}
+.about .q em{color:var(--ac-red);font-style:italic}
+.about .role{margin-top:22px;font-size:14px;color:var(--ac-ink-muted)}
+.about .role b{color:var(--ac-ink);font-weight:700;display:block;font-size:16px}
+.about .tags{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+/* logo / venture wall */
+.wall{background:var(--ac-graphite);color:#fff}
+.wall .grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.13);border-left:1px solid rgba(255,255,255,.13)}
+.wall .cell{border-right:1px solid rgba(255,255,255,.13);border-bottom:1px solid rgba(255,255,255,.13);padding:30px 24px;min-height:118px;display:flex;flex-direction:column;justify-content:center;gap:9px;transition:background var(--dur-base) var(--md-ease)}
+.wall .cell:hover{background:rgba(255,255,255,.045)}
+.wall .cell .nm{font-family:var(--font-sans);font-weight:700;font-size:21px;letter-spacing:-.015em;color:rgba(255,255,255,.6);transition:color var(--dur-base) var(--md-ease);display:flex;align-items:center;gap:9px}
+.wall .cell .nm::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ac-red);transform:scale(0);transition:transform var(--dur-base) var(--md-ease);flex:none}
+.wall .cell:hover .nm{color:#fff}
+.wall .cell:hover .nm::before{transform:scale(1)}
+.wall .cell .nt{font-family:var(--font-sans);font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.wall .shead h2{color:#fff}.wall .shead p{color:var(--text-ondark)}
+/* contact */
+.contact{background:var(--ac-paper-warm);border-top:1px solid var(--ac-line)}
+.cgrid{display:grid;grid-template-columns:1fr 460px;gap:64px;align-items:start}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.field label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ac-ink-muted)}
+.field input,.field textarea{font-family:var(--font-sans);font-size:15px;padding:13px 15px;border:1.5px solid var(--ac-line-strong);border-radius:4px;background:#fff;color:var(--ac-ink)}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--ac-red)}
+.cinfo .row{margin-bottom:22px}
+.cinfo .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ac-ink-muted);margin-bottom:5px}
+.cinfo .v{font-size:17px;font-weight:600}
+.done{background:#fff;border-top:3px solid var(--ac-red);padding:34px;box-shadow:var(--shadow-card)}
+/* footer */
+footer.site{background:var(--ac-ink);color:#fff;padding:44px 0}
+footer.site .row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+footer.site .legal{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
+/* — Material Design layer — */
+:root{--md-ease:cubic-bezier(.4,0,.2,1);--md-e2:0 2px 6px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.08);--md-e6:0 8px 24px rgba(0,0,0,.18),0 4px 8px rgba(0,0,0,.10)}
+.rp{position:absolute;border-radius:50%;transform:scale(0);pointer-events:none;background:currentColor;opacity:.26;animation:rp .58s var(--md-ease)}
+@keyframes rp{to{transform:scale(2.6);opacity:0}}
+.fab{position:fixed;right:32px;bottom:32px;z-index:60;width:60px;height:60px;border:none;border-radius:18px;background:var(--ac-red);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:var(--md-e6);cursor:pointer;transform:scale(0) translateY(12px);opacity:0;transition:transform .34s var(--md-ease),opacity .34s var(--md-ease),background var(--dur-fast)}
+.fab[data-show="true"]{transform:scale(1) translateY(0);opacity:1}
+.fab:hover{background:var(--ac-red-deep)}
+@media(max-width:900px){.svc,.wall .grid,.band .stats3{grid-template-columns:1fr 1fr}.band .lists2{grid-template-columns:1fr}.band .bcol{border-right:none;border-bottom:1px solid rgba(255,255,255,.12);padding:22px 0}.band .bcol:last-child{border-bottom:none}.about,.cgrid{grid-template-columns:1fr}.hero h1{font-size:50px}.fab{right:20px;bottom:20px}}
+@media(max-width:700px){
+.burger{display:flex}
+.nav{position:relative}
+.nav .links{position:absolute;top:76px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--ac-paper);border-bottom:1px solid var(--ac-line);box-shadow:var(--md-e2);padding:8px 40px 22px;max-height:0;overflow:hidden;opacity:0;pointer-events:none;transition:max-height var(--dur-base) var(--md-ease),opacity var(--dur-base) var(--md-ease)}
+.nav .links[data-open="true"]{max-height:360px;opacity:1;pointer-events:auto}
+.nav .links a{padding:15px 0;font-size:16px;border-bottom:1px solid var(--ac-line)}
+.nav .links .lang{align-self:flex-start;margin-top:16px}
+.nav .links>button{margin-top:16px;align-self:flex-start}
+.svc{grid-template-columns:1fr}
+.hero .cta{flex-direction:column;align-items:stretch}
+}
+</style></head>
+<body><div id="root"></div>
+<script type="text/babel">
+const { Logo, Eyebrow, Button, Tag, Card, Stat } = window.ATTIAConsultingDesignSystem_3d4bf9;
+const MARK = "../../assets/attia-logo.png";
+
+// Material ripple + delegation
+function ripple(el, x, y){
+  const r = el.getBoundingClientRect(), d = Math.max(r.width, r.height);
+  const s = document.createElement('span');
+  s.className='rp'; s.style.width=s.style.height=d+'px';
+  s.style.left=(x-r.left-d/2)+'px'; s.style.top=(y-r.top-d/2)+'px';
+  if(getComputedStyle(el).position==='static') el.style.position='relative';
+  el.style.overflow='hidden'; el.appendChild(s); setTimeout(()=>s.remove(),600);
+}
+document.addEventListener('pointerdown', e=>{
+  const t = e.target.closest('button, .svc > div');
+  if(t) ripple(t, e.clientX, e.clientY);
+}, true);
+window.addEventListener('scroll', ()=>{ const h=document.querySelector('header'); if(h) h.dataset.elevated = window.scrollY>8; });
+
+// — bilingual copy (DE default) —
+const T = {
+  de: {
+    nav: ['Leistungen','Über Karim','Kontakt'],
+    heroEy: 'Strategieberatung · seit 1989',
+    heroH: ['An der Schnittstelle von Anwendung und ', 'Technik', '.'],
+    heroSub: 'Unabhängige Beratung dort, wo Technologie auf Entscheidung trifft.',
+    heroCta: ['Gespräch vereinbaren','Leistungen'],
+    svcEy: 'Leistungen', svcH: 'Klar, wo es zählt.',
+    svcSub: 'Technisches Verständnis, in die Sprache der Entscheider übersetzt.',
+    svc: [
+      ['01','Strategie & Diligence','Technische und kommerzielle Bewertung als Grundlage für Entscheidungen.','Von der Technologie-Due-Diligence vor einer Beteiligung bis zur nüchternen Zweitmeinung.'],
+      ['02','Aufbau & Betrieb','Geschäftsführung und operative Führung auf Zeit.','In Aufbau, Umbruch oder Übergang — mit Hand am Steuer.'],
+      ['03','Netzwerk','Zugang zu den richtigen Leuten zur richtigen Zeit.','Über Industrien und Technologien hinweg, seit über drei Jahrzehnten gewachsen.'],
+    ],
+    more: ['Mehr','Weniger'],
+    stats: [['1989','Gegründet'],['30+','Industrien'],['Global','Netzwerk'],['C-Level','Sparring']],
+    bandSince: ['1989','Aktiv seit'],
+    stats3: [['1989','Aktiv seit'],['Global','Netzwerk'],['C-Level','Sparring']],
+    bandWaves: 'Technologiewellen', waves: ['Datenbanken','Internet','Internet der Dinge','Künstliche Intelligenz'],
+    bandIndustries: 'Kernbranchen', industries: ['ERP','Marketing & Advertising','Health','Sustainability'],
+    aboutEy: 'Über Karim',
+    aboutQ: ['Seit über drei Jahrzehnten dasselbe Muster: die technische Wende ','früh',' erkennen, beim Aufbau neuer Ökosysteme mitgestalten und darauf basierende Märkte etablieren — von Datenbanken bis KI, quer durch Branchen.'],
+    aboutRole: ['Karim H. Attia','Gründer & Geschäftsführer'],
+    tags: ['Datenbanken','Internet','IoT','Kryptografie','KI'],
+    wallEy: 'Stationen & Netzwerk', wallH: 'Wo aus Technik Märkte wurden.',
+    wallSub: 'Ausgewählte Gründungen, Exits und Standardisierungsgremien — über vier Technologiewellen.',
+    wallK: 'de',
+    cEy: 'Kontakt', cH: 'Sprechen wir.',
+    cLabels: ['Telefon','E-Mail','Anschrift','Name','Nachricht','Anfrage senden'],
+    cPlace: ['Ihr Name','name@firma.de','Worum geht es?'],
+    done: ['Gesendet','Vielen Dank','Wir melden uns kurzfristig unter'],
+  },
+  en: {
+    nav: ['Services','About Karim','Contact'],
+    heroEy: 'Strategy advisory · since 1989',
+    heroH: ['Where application meets ', 'technology', '.'],
+    heroSub: 'Independent advice where technology meets the decision.',
+    heroCta: ['Book a conversation','Services'],
+    svcEy: 'Services', svcH: 'Clear where it counts.',
+    svcSub: 'Technical judgement, translated into the language of decision-makers.',
+    svc: [
+      ['01','Strategy & Diligence','Technical and commercial assessment as a basis for decisions.','From technology due diligence before an investment to a sober second opinion.'],
+      ['02','Build & Operate','Managing director and operational lead, on demand.','In build-up, turnaround or transition — hands on the wheel.'],
+      ['03','Network','Access to the right people at the right time.','Across industries and technologies, grown over three decades.'],
+    ],
+    more: ['More','Less'],
+    stats: [['1989','Established'],['30+','Industries'],['Global','Network'],['C-Level','Sparring']],
+    bandSince: ['1989','Active since'],
+    stats3: [['1989','Active since'],['Global','Network'],['C-Level','Sparring']],
+    bandWaves: 'Technology waves', waves: ['Databases','Internet','Internet of Things','Artificial Intelligence'],
+    bandIndustries: 'Core industries', industries: ['ERP','Marketing & Advertising','Health','Sustainability'],
+    aboutEy: 'About Karim',
+    aboutQ: ['For over three decades, the same pattern: spotting the technical shift ','early',', helping build the ecosystems around it and establishing the markets on top — from databases to AI, across the most diverse industries.'],
+    aboutRole: ['Karim H. Attia','Founder & Managing Director'],
+    tags: ['Databases','Internet','IoT','Cryptography','AI'],
+    wallEy: 'Track record & network', wallH: 'Where technology became markets.',
+    wallSub: 'Selected ventures, exits and standards bodies — across four waves of technology.',
+    wallK: 'en',
+    cEy: 'Contact', cH: "Let's talk.",
+    cLabels: ['Phone','Email','Address','Name','Message','Send enquiry'],
+    cPlace: ['Your name','name@company.com','What is it about?'],
+    done: ['Sent','Thank you','We will get back to you shortly at'],
+  },
+};
+
+function Header({t, lang, setLang}){
+  const [open,setOpen]=React.useState(false);
+  return (
+    <header><div className="wrap nav">
+      <Logo markSrc={MARK} size={30} />
+      <button className="burger" data-open={open} aria-label="Menu" aria-expanded={open} onClick={()=>setOpen(o=>!o)}>
+        <span></span><span></span><span></span>
+      </button>
+      <div className="links" data-open={open}>
+        <a href="#leistungen" onClick={()=>setOpen(false)}>{t.nav[0]}</a>
+        <a href="#ueber" onClick={()=>setOpen(false)}>{t.nav[1]}</a>
+        <div className="lang">
+          <button data-on={lang==='de'} onClick={()=>setLang('de')}>DE</button>
+          <button data-on={lang==='en'} onClick={()=>setLang('en')}>EN</button>
+        </div>
+        <Button size="sm" onClick={()=>{setOpen(false);document.getElementById('kontakt').scrollIntoView();}}>{t.nav[2]}</Button>
+      </div>
+    </div></header>
+  );
+}
+
+function Hero({t}){
+  return (
+    <div className="hero"><div className="wrap">
+      <Eyebrow tone="light">{t.heroEy}</Eyebrow>
+      <h1>{t.heroH[0]}<em>{t.heroH[1]}</em>{t.heroH[2]}</h1>
+      <div className="sub">{t.heroSub}</div>
+      <div className="cta">
+        <Button size="lg" onClick={()=>document.getElementById('kontakt').scrollIntoView()}>{t.heroCta[0]}</Button>
+        <Button size="lg" variant="outline" style={{color:'#fff',borderColor:'rgba(255,255,255,.4)'}} onClick={()=>document.getElementById('leistungen').scrollIntoView()}>{t.heroCta[1]}</Button>
+      </div>
+    </div></div>
+  );
+}
+
+function Services({t}){
+  const [open,setOpen]=React.useState(null);
+  return (
+    <section id="leistungen"><div className="wrap">
+      <div className="shead"><Eyebrow>{t.svcEy}</Eyebrow><h2>{t.svcH}</h2><p>{t.svcSub}</p></div>
+      <div className="svc">
+        {t.svc.map((s,i)=>(
+          <Card key={i} accent interactive onClick={()=>setOpen(open===i?null:i)}>
+            <div className="n">{s[0]}</div><h3>{s[1]}</h3><p>{s[2]}</p>
+            <div className="more" style={{maxHeight:open===i?200:0,opacity:open===i?1:0,paddingTop:open===i?16:0}}>{s[3]}</div>
+            <div className="hint">{open===i?t.more[1]+' ▲':t.more[0]+' ▾'}</div>
+          </Card>
+        ))}
+      </div>
+    </div></section>
+  );
+}
+
+function Band({t}){
+  return (
+    <div className="band"><section style={{padding:'70px 0'}}><div className="wrap">
+      <div className="stats3">
+        {t.stats3.map((s,i)=><div className="scell" key={i}><Stat value={s[0]} label={s[1]} tone="light" /></div>)}
+      </div>
+      <div className="lists2">
+        <div className="bcol"><div className="bh">{t.bandWaves}</div><ul>{t.waves.map((w,i)=><li key={i}>{w}</li>)}</ul></div>
+        <div className="bcol"><div className="bh">{t.bandIndustries}</div><ul>{t.industries.map((w,i)=><li key={i}>{w}</li>)}</ul></div>
+      </div>
+    </div></section></div>
+  );
+}
+
+function About({t}){
+  return (
+    <section id="ueber"><div className="wrap about">
+      <img src="../../assets/karim-attia.jpg" alt="Karim H. Attia" />
+      <div>
+        <Eyebrow>{t.aboutEy}</Eyebrow>
+        <div className="q" style={{marginTop:22}}>{t.aboutQ[0]}<em>{t.aboutQ[1]}</em>{t.aboutQ[2]}</div>
+        <div className="role"><b>{t.aboutRole[0]}</b>{t.aboutRole[1]}</div>
+        <div className="tags">{t.tags.map((x,i)=><Tag key={i} tone={i===0?'red':'neutral'}>{x}</Tag>)}</div>
+      </div>
+    </div></section>
+  );
+}
+
+function Contact({t}){
+  const [sent,setSent]=React.useState(false);
+  const [f,setF]=React.useState({name:'',email:'',msg:''});
+  const ok=f.name.trim()&&f.email.trim();
+  return (
+    <div className="contact" id="kontakt"><section><div className="wrap cgrid">
+      <div className="cinfo">
+        <Eyebrow>{t.cEy}</Eyebrow>
+        <h2 style={{fontFamily:'var(--font-display)',fontWeight:900,fontSize:40,letterSpacing:'-.02em',margin:'18px 0 30px'}}>{t.cH}</h2>
+        <div className="row"><div className="k">{t.cLabels[0]}</div><div className="v">+49 172 4235533</div></div>
+        <div className="row"><div className="k">{t.cLabels[1]}</div><div className="v"><a href="#">karim@attia.consulting</a></div></div>
+        <div className="row"><div className="k">{t.cLabels[2]}</div><div className="v">Gorch-Fock-Haus · Breite Straße 159 · 22767 Hamburg</div></div>
+      </div>
+      {sent ? (
+        <div className="done"><Eyebrow>{t.done[0]}</Eyebrow><h3 style={{fontSize:22,margin:'16px 0 8px'}}>{t.done[1]}, {f.name.split(' ')[0]||''}.</h3>
+          <p style={{fontFamily:'var(--font-serif)',color:'var(--ac-ink-soft)',lineHeight:1.6,margin:0}}>{t.done[2]} {f.email}.</p></div>
+      ) : (
+        <form onSubmit={e=>{e.preventDefault();if(ok)setSent(true);}}>
+          <div className="field"><label>{t.cLabels[3]}</label><input value={f.name} onChange={e=>setF({...f,name:e.target.value})} placeholder={t.cPlace[0]} /></div>
+          <div className="field"><label>{t.cLabels[1]}</label><input type="email" value={f.email} onChange={e=>setF({...f,email:e.target.value})} placeholder={t.cPlace[1]} /></div>
+          <div className="field"><label>{t.cLabels[4]}</label><textarea rows="4" value={f.msg} onChange={e=>setF({...f,msg:e.target.value})} placeholder={t.cPlace[2]} /></div>
+          <Button type="submit" size="lg" style={{opacity:ok?1:.5,pointerEvents:ok?'auto':'none'}}>{t.cLabels[5]}</Button>
+        </form>
+      )}
+    </div></section></div>
+  );
+}
+
+const WALL = [
+  {n:'Xenion', de:'Aufbau · Exit an Isobar', en:'Built · exit to Isobar'},
+  {n:'Isobar', de:'Käufer von Xenion', en:'Acquired Xenion'},
+  {n:'Dentsu Aegis Network', de:'Baute darauf auf', en:'Built on it'},
+  {n:'nugg.ad', de:'Exit an Deutsche Post DHL', en:'Exit to Deutsche Post DHL'},
+  {n:'Deutsche Post DHL', de:'Käufer von nugg.ad', en:'Acquired nugg.ad'},
+  {n:'UBIRCH', de:'EU Digital COVID Certificate', en:'EU Digital COVID Certificate'},
+  {n:'IBM', de:'Impfzertifikat-Partner', en:'Vaccination-cert partner'},
+  {n:'BMG / RKI', de:'Bund · Pandemie', en:'Federal · pandemic'},
+  {n:'GOVERNIFY', de:'Trust-Infrastruktur', en:'Trust infrastructure'},
+  {n:'Coalition-X', de:'Gaia-X Ökosystem', en:'Gaia-X ecosystem'},
+  {n:'Open Prometheus', de:'Medizinische Evidenz', en:'Medical evidence'},
+  {n:'IAB Europe', de:'Vorsitz Brand Advertising', en:'Chaired Brand Advertising'},
+  {n:'IAB US', de:'Standards · USA', en:'Standards · US'},
+  {n:'BVDW', de:'Digitalverband', en:'Digital industry body'},
+  {n:'AGOF', de:'Reichweitenstandard', en:'Reach standardisation'},
+  {n:'agma', de:'Media-Analyse', en:'Media measurement'},
+  {n:'ZIA e.V.', de:'Verband', en:'Association'},
+];
+
+function Wall({t, lang}){
+  return (
+    <div className="wall"><section id="netzwerk"><div className="wrap">
+      <div className="shead"><Eyebrow tone="light">{t.wallEy}</Eyebrow><h2>{t.wallH}</h2><p>{t.wallSub}</p></div>
+      <div className="grid">
+        {WALL.map((w,i)=>(
+          <div className="cell" key={i}>
+            <div className="nm">{w.n}</div>
+            <div className="nt">{w[lang]}</div>
+          </div>
+        ))}
+      </div>
+    </div></section></div>
+  );
+}
+
+function SiteFooter(){  return (
+    <footer className="site"><div className="wrap row">
+      <Logo variant="wordmark" tone="light" size={26} />
+      <div className="legal">ATTIA Consulting · Gorch-Fock-Haus · Breite Straße 159 · 22767 Hamburg · USt-IdNr. DE247412700<br/>Geschäftsführer: Karim H. Attia · © 2026</div>
+    </div></footer>
+  );
+}
+
+function Fab(){
+  const [show,setShow]=React.useState(false);
+  React.useEffect(()=>{const f=()=>setShow(window.scrollY>520);f();window.addEventListener('scroll',f);return()=>window.removeEventListener('scroll',f);},[]);
+  return (
+    <button className="fab" data-show={show} onClick={()=>document.getElementById('kontakt').scrollIntoView()} aria-label="Kontakt">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16v12H5.2L4 18.4V4z"/></svg>
+    </button>
+  );
+}
+
+function App(){
+  const [lang,setLang]=React.useState('de');
+  const t = T[lang];
+  React.useEffect(()=>{document.documentElement.lang=lang;},[lang]);
+  return (
+    <><Header t={t} lang={lang} setLang={setLang}/><Hero t={t}/><Services t={t}/><Band t={t}/><About t={t}/><Wall t={t} lang={lang}/><Contact t={t}/><SiteFooter/><Fab/></>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

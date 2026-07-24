@@ -1,0 +1,9 @@
+import * as React from 'react';
+
+/** Uppercase tracked eyebrow label with the signature red underline rule. */
+export interface EyebrowProps extends React.HTMLAttributes<HTMLSpanElement> {
+  tone?: 'dark' | 'light';
+  /** Show the red underline rule. */
+  rule?: boolean;
+}
+export declare function Eyebrow(props: EyebrowProps): JSX.Element;

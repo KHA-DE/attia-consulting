@@ -1,0 +1,48 @@
+import React from 'react';
+
+/**
+ * ATTIA Consulting logo. Type-based wordmark by default (always renders);
+ * pass `markSrc` to show the network mark image alongside it.
+ */
+export function Logo({
+  variant = 'lockup',      // 'lockup' | 'wordmark' | 'stacked'
+  tone = 'dark',           // 'dark' (ink on light) | 'light' (reversed)
+  size = 40,               // wordmark cap size in px
+  markSrc,                 // optional url to assets/attia-logo.png
+  markHeight,              // optional override for mark height
+  style,
+  ...rest
+}) {
+  const ink = tone === 'light' ? '#FFFFFF' : 'var(--ac-ink)';
+  const red = 'var(--ac-red)';
+  const stacked = variant === 'stacked';
+
+  const wordmark = (
+    <span style={{
+      display: 'flex', flexDirection: 'column', lineHeight: 0.9,
+      fontFamily: 'var(--font-display)', fontWeight: 900, letterSpacing: '-0.02em',
+    }}>
+      <span style={{ color: ink, fontSize: size }}>ATTIA</span>
+      <span style={{
+        color: red, fontFamily: 'var(--font-sans)', fontWeight: 700,
+        fontSize: size * 0.6, letterSpacing: 0, marginTop: size * 0.04,
+      }}>Consulting</span>
+    </span>
+  );
+
+  const mark = markSrc && variant !== 'wordmark' ? (
+    <img src={markSrc} alt="ATTIA network mark"
+      style={{ height: markHeight || (stacked ? size * 1.8 : size * 1.5), display: 'block',
+        filter: tone === 'light' ? 'invert(1) hue-rotate(180deg)' : 'none' }} />
+  ) : null;
+
+  return (
+    <span style={{
+      display: 'inline-flex', alignItems: 'center', gap: size * 0.4,
+      flexDirection: stacked ? 'column' : 'row', ...style,
+    }} {...rest}>
+      {mark}
+      {wordmark}
+    </span>
+  );
+}

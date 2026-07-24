@@ -1,0 +1,13 @@
+import * as React from 'react';
+
+/**
+ * Content card with hairline border and quiet elevation.
+ * @startingPoint section="Core" subtitle="Content card" viewport="360x220"
+ */
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Red 3px top accent rule. */
+  accent?: boolean;
+  /** Lift on hover. */
+  interactive?: boolean;
+}
+export declare function Card(props: CardProps): JSX.Element;

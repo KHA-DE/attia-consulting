@@ -1,0 +1,5 @@
+# Heavy self-packing design bundle (2 MB, redundant to index.html) — keep clean source only
+design/design_handoff_website/reference/website-standalone.html
+
+# Tooling artifacts
+.playwright-mcp/

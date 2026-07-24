@@ -1,0 +1,42 @@
+/* ATTIA Consulting — Color tokens
+   Brand palette sampled from the logo: near-black ink + a deep crimson red,
+   on warm-neutral paper. Restraint is the brand: black + white + one red. */
+:root {
+  /* — Base ink & paper — */
+  --ac-ink: #111111;          /* primary text / wordmark black */
+  --ac-ink-soft: #3A3A3C;     /* secondary text */
+  --ac-ink-muted: #6E6E73;    /* captions, meta */
+  --ac-paper: #FFFFFF;         /* pure paper */
+  --ac-paper-warm: #F7F5F2;    /* warm off-white surface */
+  --ac-paper-sink: #EFEDE8;    /* recessed / alt surface */
+
+  /* — Brand red (sampled ≈ #BB0607) — */
+  --ac-red: #BC0710;           /* primary brand red */
+  --ac-red-deep: #8C040B;      /* hover / press */
+  --ac-red-bright: #D81420;    /* optional highlight only — NOT the primary; primary is always --ac-red */
+  --ac-red-ink: #5A0B10;       /* deep oxblood — technical anchor */
+  --ac-red-tint: #ECEDEE;      /* neutral cool wash (surface for tags/callouts) */
+
+  /* — Neutrals / lines — */
+  --ac-line: #E3E0DA;          /* hairline borders */
+  --ac-line-strong: #C9C5BD;   /* stronger dividers */
+  --ac-graphite: #1C1C1E;      /* dark surface */
+
+  /* — Semantic aliases — */
+  --text-primary: var(--ac-ink);
+  --text-secondary: var(--ac-ink-soft);
+  --text-muted: var(--ac-ink-muted);
+  --text-onred: #FFFFFF;
+  --text-ondark: #F3F1EC;
+
+  --surface: var(--ac-paper);
+  --surface-warm: var(--ac-paper-warm);
+  --surface-alt: var(--ac-paper-sink);
+  --surface-dark: var(--ac-graphite);
+
+  --accent: var(--ac-red);
+  --accent-hover: var(--ac-red-deep);
+
+  --border: var(--ac-line);
+  --border-strong: var(--ac-line-strong);
+}

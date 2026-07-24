@@ -1,0 +1,11 @@
+import * as React from 'react';
+
+/**
+ * Button — primary red, dark, outline, or ghost.
+ * @startingPoint section="Core" subtitle="Action button" viewport="300x80"
+ */
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'dark' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+}
+export declare function Button(props: ButtonProps): JSX.Element;

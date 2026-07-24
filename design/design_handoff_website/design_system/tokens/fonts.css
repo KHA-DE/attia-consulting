@@ -1,0 +1,5 @@
+/* ATTIA Consulting — Webfonts
+   Substitutions on Google Fonts (originals used Arial / system fonts):
+   - Archivo  → grotesque for the wordmark, headings, labels, UI
+   - Spectral → refined serif for editorial body / long-form documents */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Expanded:wght@600;700;800;900&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
