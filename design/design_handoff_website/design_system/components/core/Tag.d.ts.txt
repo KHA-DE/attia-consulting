@@ -1,0 +1,7 @@
+import * as React from 'react';
+
+/** Small uppercase tag / badge for categories and statuses. */
+export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
+  tone?: 'neutral' | 'red' | 'solid' | 'dark' | 'outline';
+}
+export declare function Tag(props: TagProps): JSX.Element;

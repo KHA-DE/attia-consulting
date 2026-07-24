@@ -1,0 +1,16 @@
+import React from 'react';
+
+/** Eyebrow label — uppercase, tracked, with the signature red rule. */
+export function Eyebrow({ children, tone = 'dark', rule = true, style, ...rest }) {
+  return (
+    <span style={{
+      display: 'inline-block',
+      fontFamily: 'var(--font-sans)', fontSize: 'var(--text-2xs)', fontWeight: 700,
+      letterSpacing: 'var(--ls-label)', textTransform: 'uppercase',
+      color: tone === 'light' ? 'var(--text-ondark)' : 'var(--ac-ink)',
+      paddingBottom: rule ? 6 : 0,
+      borderBottom: rule ? '3px solid var(--ac-red)' : 'none',
+      ...style,
+    }} {...rest}>{children}</span>
+  );
+}

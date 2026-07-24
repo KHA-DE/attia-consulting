@@ -1,0 +1,21 @@
+import React from 'react';
+
+/** Big-number statistic block — for track record / credentials. */
+export function Stat({ value, label, tone = 'dark', style, ...rest }) {
+  return (
+    <div style={{ ...style }} {...rest}>
+      <div style={{
+        fontFamily: 'var(--font-display)', fontWeight: 900, lineHeight: 1,
+        fontSize: 'var(--text-3xl)', letterSpacing: '-0.02em',
+        color: tone === 'light' ? '#fff' : 'var(--ac-ink)',
+      }}>{value}</div>
+      <div style={{
+        fontFamily: 'var(--font-sans)', fontWeight: 600, marginTop: 10,
+        fontSize: 'var(--text-2xs)', letterSpacing: 'var(--ls-label)',
+        textTransform: 'uppercase',
+        color: tone === 'light' ? 'var(--text-ondark)' : 'var(--ac-ink-muted)',
+        borderTop: '3px solid var(--ac-red)', paddingTop: 8, display: 'inline-block',
+      }}>{label}</div>
+    </div>
+  );
+}

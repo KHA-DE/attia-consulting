@@ -1,0 +1,41 @@
+import React from 'react';
+
+const sizes = {
+  sm: { padding: '8px 16px', fontSize: 'var(--text-2xs)' },
+  md: { padding: '12px 22px', fontSize: 'var(--text-sm)' },
+  lg: { padding: '15px 30px', fontSize: 'var(--text-base)' },
+};
+
+/** Primary action button. Red fill, outline, or ghost — square-ish, confident. */
+export function Button({ variant = 'primary', size = 'md', children, style, ...rest }) {
+  const base = {
+    fontFamily: 'var(--font-sans)', fontWeight: 600, letterSpacing: '0.01em',
+    borderRadius: 'var(--radius-md)', cursor: 'pointer', border: '1.5px solid transparent',
+    transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast), border-color var(--dur-fast)',
+    display: 'inline-flex', alignItems: 'center', gap: 8, lineHeight: 1,
+    ...sizes[size],
+  };
+  const variants = {
+    primary: { background: 'var(--ac-red)', color: '#fff' },
+    dark: { background: 'var(--ac-ink)', color: '#fff' },
+    outline: { background: 'transparent', color: 'var(--ac-ink)', borderColor: 'var(--ac-line-strong)' },
+    ghost: { background: 'transparent', color: 'var(--ac-red)' },
+  };
+  return (
+    <button
+      style={{ ...base, ...variants[variant], ...style }}
+      onMouseEnter={e => {
+        if (variant === 'primary') e.currentTarget.style.background = 'var(--ac-red-deep)';
+        if (variant === 'dark') e.currentTarget.style.background = '#000';
+        if (variant === 'outline') e.currentTarget.style.borderColor = 'var(--ac-ink)';
+        if (variant === 'ghost') e.currentTarget.style.color = 'var(--ac-red-deep)';
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.background = variants[variant].background;
+        e.currentTarget.style.borderColor = variants[variant].borderColor || 'transparent';
+        e.currentTarget.style.color = variants[variant].color;
+      }}
+      {...rest}
+    >{children}</button>
+  );
+}

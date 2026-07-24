@@ -1,0 +1,19 @@
+import * as React from 'react';
+
+/**
+ * ATTIA Consulting logo — type-based wordmark, optionally paired with the network mark.
+ * @startingPoint section="Brand" subtitle="Wordmark & lockup" viewport="440x220"
+ */
+export interface LogoProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /** Layout of the mark relative to the wordmark. */
+  variant?: 'lockup' | 'wordmark' | 'stacked';
+  /** Color treatment. */
+  tone?: 'dark' | 'light';
+  /** Wordmark cap height in px. */
+  size?: number;
+  /** URL to the network mark PNG (assets/attia-logo.png). Omit for wordmark-only. */
+  markSrc?: string;
+  /** Override the mark image height in px. */
+  markHeight?: number;
+}
+export declare function Logo(props: LogoProps): JSX.Element;
