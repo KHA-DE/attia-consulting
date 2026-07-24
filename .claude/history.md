@@ -4,6 +4,39 @@ Context between sessions for attia-consulting.
 
 ---
 
+## Session: 2026-07-24 - Stationen-Wall zu interaktivem Beziehungsnetz
+
+### Summary
+Die flache Logo-Wall der Stationen-Sektion durch ein interaktives SVG-Beziehungsnetz
+ersetzt und live gepusst. Knoten = monochrome Logos, Kanten = Karims tatsaechliche
+Beziehungen (Gruendungen, Exits, Gremien), ATTIA als zentrale Nabe.
+
+### Umgesetzt (live)
+- 19 monochrome weisse Logos kuratiert (assets/logos/), Sourcing per Logo.dev,
+  Wikimedia Special:FilePath und eigenen Dateien; Mono-Pipeline in
+  dev-environment/_logowork/mono.py (mehrere Keying-Modi: default/darkink/keywhite).
+- Interaktives Netz in index.html: N (21 Knoten inkl. FOMA-Textknoten + ATTIA-Kern),
+  EDGES (23 Kanten, Karims exakte Struktur), CLUSTERS (4 Labels: AdTech-Aera,
+  Standards & Verbaende, Pandemie & Trust, Aktuelle Ventures), netSVG(lang).
+  Hover/Tap hebt Kanten + Nachbarn hervor, dimmt Rest (mount()-Interaktivitaet,
+  guarded by .netsvg).
+- Zentrale Nabe: statt rotem ATTIA-Kreis das Consulting-Netzwerk-Logo
+  (assets/logos/attia.png). Dunkeltaugliche Variante gebaut (Netz weiss, zentrale
+  Figur Markenrot) via _logowork/attia_net.py.
+- Verifiziert (Playwright, localhost): Desktop 1280 + Mobil 390 = 0 horizontaler
+  Ueberlauf; 21 Knoten/23 Kanten/20 Bilder geladen; Interaktion korrekt; nur
+  favicon-404. Karim gezeigt (Ruhe- + Aktivzustand), OK, dann gepusst.
+
+### Entscheidungen
+- Netz statt Raster: erzaehlt die Beziehungen statt nur Namen zu listen.
+- Nabe = echtes Consulting-Logo (ist selbst ein Personen-Netz), thematisch stimmig.
+
+### Offen
+- nettest.html (Prototyp) geloescht. Mobil ist das Netz gestaucht/klein aber
+  lesbar + tap-bar; ggf. spaeter eine mobil-optimierte Variante erwaegen.
+
+---
+
 ## Session: 2026-07-23/24 - Website als eigenes Projekt aufgesetzt
 
 ### Summary
