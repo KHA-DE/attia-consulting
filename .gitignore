@@ -3,3 +3,6 @@ design/design_handoff_website/reference/website-standalone.html
 
 # Tooling artifacts
 .playwright-mcp/
+
+# Internal working draft (node subtexts/edges), kept locally, not in the public repo
+netz-subtexte.md
